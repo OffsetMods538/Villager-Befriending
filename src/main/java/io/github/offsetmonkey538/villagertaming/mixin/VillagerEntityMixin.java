@@ -57,14 +57,11 @@ public abstract class VillagerEntityMixin extends Entity implements Tameable {
 
     @Inject(
         method = "loot",
-        at = @At("HEAD"),
-        cancellable = true
+        at = @At("HEAD")
     )
     private void loot(ItemEntity item, CallbackInfo ci) {
         if (!item.getStack().isOf(TAMING_ITEM)) return;
         tame(item.getOwner());
-        item.discard();
-        ci.cancel();
     }
 
     @Inject(
