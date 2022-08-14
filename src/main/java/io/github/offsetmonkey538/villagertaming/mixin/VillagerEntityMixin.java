@@ -52,7 +52,6 @@ public abstract class VillagerEntityMixin extends Entity implements Tameable {
 
         E[] result = Arrays.copyOf(original, original.length + 1);
         result[original.length] = (E) TAMING_ITEM;
-        System.out.println("Is it null? Find out here: " + Arrays.toString(result));
         return result;
     }
 
