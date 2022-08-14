@@ -4,9 +4,7 @@
   "package": "io.github.offsetmonkey538.villagertaming.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-  ],
-  "client": [
-    "ExampleMixin"
+    "VillagerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
