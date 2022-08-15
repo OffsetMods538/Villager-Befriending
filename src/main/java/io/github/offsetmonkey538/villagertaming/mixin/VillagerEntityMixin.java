@@ -85,7 +85,7 @@ public abstract class VillagerEntityMixin extends Entity implements Tameable {
     @Unique
     public void tame(@Nullable UUID player) {
         this.setOwnerUuid(player);
-        this.world.sendEntityStatus(this, EntityStatuses.ADD_POSITIVE_PLAYER_REACTION_PARTICLES);
+        this.world.sendEntityStatus((VillagerEntity)(Object)this, EntityStatuses.ADD_VILLAGER_HEART_PARTICLES);
     }
 
     @Unique
