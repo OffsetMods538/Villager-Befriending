@@ -68,10 +68,6 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
         tame(item.getThrower());
     }
 
-    /*
-        Code for taming starts here
-    */
-
     @Inject(
         method = "initDataTracker",
         at = @At("TAIL")
