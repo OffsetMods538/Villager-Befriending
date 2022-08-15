@@ -63,7 +63,7 @@ public abstract class VillagerEntityMixin extends Entity implements Tameable {
     )
     private void loot(ItemEntity item, CallbackInfo ci) {
         if (!item.getStack().isOf(TAMING_ITEM)) return;
-        tame(item.getOwner());
+        tame(item.getThrower());
     }
 
     /*
