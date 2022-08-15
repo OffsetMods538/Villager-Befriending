@@ -1,6 +1,6 @@
-package io.github.offsetmonkey538.villagertaming.goal;
+package io.github.offsetmonkey538.villagertaming.entity.goal;
 
-import io.github.offsetmonkey538.villagertaming.mixin.VillagerEntityMixin;
+import io.github.offsetmonkey538.villagertaming.entity.IVillagerData;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.entity.LivingEntity;
@@ -11,7 +11,6 @@ import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.ai.pathing.LandPathNodeMaker;
 import net.minecraft.entity.ai.pathing.MobNavigation;
 import net.minecraft.entity.ai.pathing.PathNodeType;
-import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldView;
@@ -24,7 +23,7 @@ public class VillagerFollowOwnerGoal extends Goal {
     private static final int HORIZONTAL_VARIATION = 3;
     private static final int VERTICAL_VARIATION = 1;
     private final VillagerEntity entity;
-    private final Tameable tameable;
+    private final IVillagerData villagerData;
     private LivingEntity owner;
     private final WorldView world;
     private final double speed;
@@ -35,9 +34,9 @@ public class VillagerFollowOwnerGoal extends Goal {
     private float oldWaterPathfindingPenalty;
     private final boolean leavesAllowed;
 
-    public VillagerFollowOwnerGoal(VillagerEntity entity, Tameable tameable, double speed, float minDistance, float maxDistance, boolean leavesAllowed) {
+    public VillagerFollowOwnerGoal(VillagerEntity entity, IVillagerData villagerData, double speed, float minDistance, float maxDistance, boolean leavesAllowed) {
         this.entity = entity;
-        this.tameable = tameable;
+        this.villagerData = villagerData;
         this.world = entity.world;
         this.speed = speed;
         this.navigation = entity.getNavigation();
@@ -52,7 +51,7 @@ public class VillagerFollowOwnerGoal extends Goal {
 
     @Override
     public boolean canStart() {
-        LivingEntity livingEntity = (LivingEntity) this.tameable.getOwner();
+        LivingEntity livingEntity = this.villagerData.getOwner();
         if (livingEntity == null) {
             return false;
         }

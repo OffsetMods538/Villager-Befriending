@@ -1,13 +1,11 @@
 package io.github.offsetmonkey538.villagertaming.mixin;
 
-import io.github.offsetmonkey538.villagertaming.goal.VillagerFollowOwnerGoal;
-import net.minecraft.entity.Entity;
+import io.github.offsetmonkey538.villagertaming.entity.IVillagerData;
+import io.github.offsetmonkey538.villagertaming.entity.goal.VillagerFollowOwnerGoal;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Tameable;
-import net.minecraft.entity.ai.brain.Brain;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -31,7 +29,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Mixin(VillagerEntity.class)
-public abstract class VillagerEntityMixin extends MobEntity implements Tameable {
+public abstract class VillagerEntityMixin extends MobEntity implements IVillagerData {
 
     @Unique
     @SuppressWarnings("WrongEntityDataParameterClass")
