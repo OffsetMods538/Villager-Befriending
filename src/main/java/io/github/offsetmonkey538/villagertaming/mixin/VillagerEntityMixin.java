@@ -1,14 +1,17 @@
 package io.github.offsetmonkey538.villagertaming.mixin;
 
+import io.github.offsetmonkey538.villagertaming.goal.VillagerFollowOwnerGoal;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Tameable;
+import net.minecraft.entity.ai.brain.Brain;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -28,7 +31,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Mixin(VillagerEntity.class)
-public abstract class VillagerEntityMixin extends Entity implements Tameable {
+public abstract class VillagerEntityMixin extends MobEntity implements Tameable {
 
     @Unique
     @SuppressWarnings("WrongEntityDataParameterClass")
@@ -37,8 +40,8 @@ public abstract class VillagerEntityMixin extends Entity implements Tameable {
     @Unique
     private static Item TAMING_ITEM; //TODO: Add custom item made by combining emeralds, diamonds, and gold. Maybe some other valuable stuff too
 
-    public VillagerEntityMixin(EntityType<?> type, World world) {
-        super(type, world);
+    protected VillagerEntityMixin(EntityType<? extends MobEntity> entityType, World world) {
+        super(entityType, world);
     }
 
     @ModifyArg(
@@ -102,6 +105,12 @@ public abstract class VillagerEntityMixin extends Entity implements Tameable {
             UUID = ServerConfigHandler.getPlayerUuidByName(this.getServer(), string);
         }
         setOwnerUuid(UUID);
+    }
+
+    @Unique
+    @Override
+    protected void initGoals() {
+        this.goalSelector.add(6, new VillagerFollowOwnerGoal((VillagerEntity) (Object)this, this, 0.5, 10.0f, 2.0f, false));
     }
 
     @Unique
