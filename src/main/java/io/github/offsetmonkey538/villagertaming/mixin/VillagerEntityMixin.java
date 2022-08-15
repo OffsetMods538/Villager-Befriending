@@ -69,7 +69,7 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
     }
 
     /*
-        Code for taming things starts here
+        Code for taming starts here
     */
 
     @Inject(
