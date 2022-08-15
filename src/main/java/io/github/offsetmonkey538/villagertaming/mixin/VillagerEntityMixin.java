@@ -11,6 +11,8 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.ServerConfigHandler;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -76,6 +78,30 @@ public abstract class VillagerEntityMixin extends Entity implements Tameable {
         this.dataTracker.startTracking(OWNER_UUID, Optional.empty());
     }
 
+    @Inject(
+        method = "writeCustomDataToNbt",
+        at = @At("TAIL")
+    )
+    public void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
+        if (this.getOwnerUuid() != null) {
+            nbt.putUuid("Owner", this.getOwnerUuid());
+        }
+    }
+
+    @Inject(
+        method = "readCustomDataFromNbt",
+        at = @At("TAIL")
+    )
+    public void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo ci) {
+        UUID UUID;
+        if (nbt.containsUuid("Owner")) {
+            UUID = nbt.getUuid("Owner");
+        } else {
+            String string = nbt.getString("Owner");
+            UUID = ServerConfigHandler.getPlayerUuidByName(this.getServer(), string);
+        }
+        setOwnerUuid(UUID);
+    }
 
     @Unique
     public void setOwnerUuid(@Nullable UUID uuid) {
