@@ -68,7 +68,7 @@ public abstract class VillagerEntityMixin extends Entity implements Tameable {
 
     /*
         Code for taming things starts here
-     */
+    */
 
     @Inject(
         method = "initDataTracker",
