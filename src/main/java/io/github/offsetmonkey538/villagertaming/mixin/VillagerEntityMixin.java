@@ -4,6 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Tameable;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -122,7 +123,7 @@ public abstract class VillagerEntityMixin extends Entity implements Tameable {
 
     @Unique
     @Override
-    public Entity getOwner() {
+    public LivingEntity getOwner() {
         try {
             UUID UUID = this.getOwnerUuid();
             if (UUID == null) {
