@@ -34,7 +34,7 @@ public abstract class VillagerEntityMixin extends Entity implements Tameable {
     private static final TrackedData<Optional<UUID>> OWNER_UUID = DataTracker.registerData(VillagerEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
 
     @Unique
-    private static Item TAMING_ITEM;
+    private static Item TAMING_ITEM; //TODO: Add custom item made by combining emeralds, diamonds, and gold. Maybe some other valuable stuff too
 
     public VillagerEntityMixin(EntityType<?> type, World world) {
         super(type, world);
