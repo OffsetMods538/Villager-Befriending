@@ -2,6 +2,7 @@ package io.github.offsetmonkey538.villagertaming.mixin;
 
 import io.github.offsetmonkey538.villagertaming.entity.IVillagerData;
 import io.github.offsetmonkey538.villagertaming.entity.goal.VillagerFollowOwnerGoal;
+import io.github.offsetmonkey538.villagertaming.screen.TamedVillagerScreenHandler;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
@@ -11,10 +12,15 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.VillagerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.server.ServerConfigHandler;
+import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,10 +29,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
+
+import static io.github.offsetmonkey538.villagertaming.entrypoint.VillagerTamingMain.MOD_ID;
 
 @Mixin(VillagerEntity.class)
 public abstract class VillagerEntityMixin extends MobEntity implements IVillagerData {
@@ -66,6 +75,17 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
     private void loot(ItemEntity item, CallbackInfo ci) {
         if (!item.getStack().isOf(TAMING_ITEM)) return;
         tame(item.getThrower());
+    }
+
+    @Inject(
+        method = "interactMob",
+        at = @At("HEAD")
+    )
+    private void openScreen(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
+        if (!player.equals(getOwner()) || !player.isSneaking()) return;
+        player.openHandledScreen(new SimpleNamedScreenHandlerFactory(
+            (syncId, playerInventory, player2) -> new TamedVillagerScreenHandler(syncId, playerInventory), Text.translatable(String.format("entity.%s.villager.command_menu", MOD_ID), (getCustomName() != null ? getCustomName() : "Villager"))
+        ));
     }
 
     @Inject(

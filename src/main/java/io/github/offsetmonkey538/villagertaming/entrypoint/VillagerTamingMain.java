@@ -1,5 +1,6 @@
 package io.github.offsetmonkey538.villagertaming.entrypoint;
 
+import io.github.offsetmonkey538.villagertaming.screen.ModScreenHandlers;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,6 @@ public class VillagerTamingMain implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		LOGGER.info("Hello Fabric world!");
+		ModScreenHandlers.register();
 	}
 }

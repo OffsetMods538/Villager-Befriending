@@ -19,6 +19,9 @@
   "entrypoints": {
     "main": [
       "${group}.entrypoint.${pascalName}Main"
+    ],
+    "client": [
+      "${group}.entrypoint.${pascalName}Client"
     ]
   },
   "mixins": [
