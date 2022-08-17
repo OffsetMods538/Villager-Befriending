@@ -4,10 +4,8 @@ import io.github.offsetmonkey538.villagertaming.entity.IVillagerData;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Tameable;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.pathing.BirdNavigation;
-import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.ai.pathing.LandPathNodeMaker;
 import net.minecraft.entity.ai.pathing.MobNavigation;
 import net.minecraft.entity.ai.pathing.PathNodeType;
@@ -26,15 +24,15 @@ public class VillagerFollowOwnerGoal extends AbstractVillagerGoal {
     private float oldWaterPathfindingPenalty;
     private final boolean leavesAllowed;
 
-    public VillagerFollowOwnerGoal(VillagerEntity entity, IVillagerData villagerData, double speed, float minDistance, float maxDistance, boolean leavesAllowed) {
-        super(entity, villagerData);
-        this.world = entity.world;
+    public VillagerFollowOwnerGoal(VillagerEntity villager, double speed, float minDistance, float maxDistance, boolean leavesAllowed) {
+        super(villager);
+        this.world = this.villager.world;
         this.speed = speed;
         this.minDistance = minDistance;
         this.maxDistance = maxDistance;
         this.leavesAllowed = leavesAllowed;
         this.setControls(EnumSet.of(Goal.Control.MOVE, Goal.Control.LOOK));
-        if (!(entity.getNavigation() instanceof MobNavigation) && !(entity.getNavigation() instanceof BirdNavigation)) {
+        if (!(this.villager.getNavigation() instanceof MobNavigation) && !(this.villager.getNavigation() instanceof BirdNavigation)) {
             throw new IllegalArgumentException("Unsupported mob type for FollowOwnerGoal");
         }
     }
@@ -51,7 +49,7 @@ public class VillagerFollowOwnerGoal extends AbstractVillagerGoal {
         // if (this.entity.isSitting()) {
         //     return false;
         // }
-        if (this.entity.squaredDistanceTo(livingEntity) < (double)(this.minDistance * this.minDistance)) {
+        if (this.villager.squaredDistanceTo(livingEntity) < (double)(this.minDistance * this.minDistance)) {
             return false;
         }
         this.owner = livingEntity;
@@ -66,34 +64,34 @@ public class VillagerFollowOwnerGoal extends AbstractVillagerGoal {
         // if (this.entity.isSitting()) {
         //     return false;
         // }
-        return !(this.entity.squaredDistanceTo(this.owner) <= (double)(this.maxDistance * this.maxDistance));
+        return !(this.villager.squaredDistanceTo(this.owner) <= (double)(this.maxDistance * this.maxDistance));
     }
 
     @Override
     public void start() {
         this.updateCountdownTicks = 0;
-        this.oldWaterPathfindingPenalty = this.entity.getPathfindingPenalty(PathNodeType.WATER);
-        this.entity.setPathfindingPenalty(PathNodeType.WATER, 0.0f);
+        this.oldWaterPathfindingPenalty = this.villager.getPathfindingPenalty(PathNodeType.WATER);
+        this.villager.setPathfindingPenalty(PathNodeType.WATER, 0.0f);
     }
 
     @Override
     public void stop() {
         this.owner = null;
         this.navigation.stop();
-        this.entity.setPathfindingPenalty(PathNodeType.WATER, this.oldWaterPathfindingPenalty);
+        this.villager.setPathfindingPenalty(PathNodeType.WATER, this.oldWaterPathfindingPenalty);
     }
 
     @Override
     public void tick() {
-        this.entity.getLookControl().lookAt(this.owner, 10.0f, this.entity.getMaxLookPitchChange());
+        this.villager.getLookControl().lookAt(this.owner, 10.0f, this.villager.getMaxLookPitchChange());
         if (--this.updateCountdownTicks > 0) {
             return;
         }
         this.updateCountdownTicks = this.getTickCount(10);
-        if (this.entity.isLeashed() || this.entity.hasVehicle()) {
+        if (this.villager.isLeashed() || this.villager.hasVehicle()) {
             return;
         }
-        if (this.entity.squaredDistanceTo(this.owner) >= 144.0) {
+        if (this.villager.squaredDistanceTo(this.owner) >= 144.0) {
             this.tryTeleport();
         } else {
             this.navigation.startMovingTo(this.owner, this.speed);
@@ -119,7 +117,7 @@ public class VillagerFollowOwnerGoal extends AbstractVillagerGoal {
         if (!this.canTeleportTo(new BlockPos(x, y, z))) {
             return false;
         }
-        this.entity.refreshPositionAndAngles((double)x + 0.5, y, (double)z + 0.5, this.entity.getYaw(), this.entity.getPitch());
+        this.villager.refreshPositionAndAngles((double)x + 0.5, y, (double)z + 0.5, this.villager.getYaw(), this.villager.getPitch());
         this.navigation.stop();
         return true;
     }
@@ -133,11 +131,11 @@ public class VillagerFollowOwnerGoal extends AbstractVillagerGoal {
         if (!this.leavesAllowed && blockState.getBlock() instanceof LeavesBlock) {
             return false;
         }
-        BlockPos blockPos = pos.subtract(this.entity.getBlockPos());
-        return this.world.isSpaceEmpty(this.entity, this.entity.getBoundingBox().offset(blockPos));
+        BlockPos blockPos = pos.subtract(this.villager.getBlockPos());
+        return this.world.isSpaceEmpty(this.villager, this.villager.getBoundingBox().offset(blockPos));
     }
 
     private int getRandomInt(int min, int max) {
-        return this.entity.getRandom().nextInt(max - min + 1) + min;
+        return this.villager.getRandom().nextInt(max - min + 1) + min;
     }
 }

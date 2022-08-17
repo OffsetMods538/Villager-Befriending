@@ -7,14 +7,14 @@ import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.passive.VillagerEntity;
 
 public abstract class AbstractVillagerGoal extends Goal {
-    protected final VillagerEntity entity;
+    protected final VillagerEntity villager;
     protected final IVillagerData villagerData;
     protected final EntityNavigation navigation;
     protected LivingEntity owner;
 
-    public AbstractVillagerGoal(VillagerEntity entity, IVillagerData villagerData) {
-        this.entity = entity;
-        this.villagerData = villagerData;
-        this.navigation = entity.getNavigation();
+    public AbstractVillagerGoal(VillagerEntity villager) {
+        this.villager = villager;
+        this.villagerData = (IVillagerData) villager;
+        this.navigation = villager.getNavigation();
     }
 }

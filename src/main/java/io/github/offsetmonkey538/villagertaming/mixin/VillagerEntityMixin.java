@@ -124,7 +124,7 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
     @Unique
     @Override
     protected void initGoals() {
-        this.goalSelector.add(6, new VillagerFollowOwnerGoal((VillagerEntity) (Object)this, this, 0.5, 10.0f, 2.0f, false));
+        this.goalSelector.add(6, new VillagerFollowOwnerGoal((VillagerEntity) (Object)this, 0.5, 10.0f, 2.0f, false));
     }
 
     @Unique
