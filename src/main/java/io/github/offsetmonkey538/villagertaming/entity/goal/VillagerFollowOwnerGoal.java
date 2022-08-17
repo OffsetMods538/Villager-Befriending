@@ -17,17 +17,9 @@ import net.minecraft.world.WorldView;
 
 import java.util.EnumSet;
 
-public class VillagerFollowOwnerGoal extends Goal {
-    public static final int TELEPORT_DISTANCE = 12;
-    private static final int HORIZONTAL_RANGE = 2;
-    private static final int HORIZONTAL_VARIATION = 3;
-    private static final int VERTICAL_VARIATION = 1;
-    private final VillagerEntity entity;
-    private final IVillagerData villagerData;
-    private LivingEntity owner;
+public class VillagerFollowOwnerGoal extends AbstractVillagerGoal {
     private final WorldView world;
     private final double speed;
-    private final EntityNavigation navigation;
     private int updateCountdownTicks;
     private final float maxDistance;
     private final float minDistance;
@@ -35,11 +27,9 @@ public class VillagerFollowOwnerGoal extends Goal {
     private final boolean leavesAllowed;
 
     public VillagerFollowOwnerGoal(VillagerEntity entity, IVillagerData villagerData, double speed, float minDistance, float maxDistance, boolean leavesAllowed) {
-        this.entity = entity;
-        this.villagerData = villagerData;
+        super(entity, villagerData);
         this.world = entity.world;
         this.speed = speed;
-        this.navigation = entity.getNavigation();
         this.minDistance = minDistance;
         this.maxDistance = maxDistance;
         this.leavesAllowed = leavesAllowed;
