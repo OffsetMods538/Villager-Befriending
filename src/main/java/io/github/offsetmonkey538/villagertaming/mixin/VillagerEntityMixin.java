@@ -80,10 +80,15 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
 
     @Inject(
         method = "loot",
-        at = @At("HEAD")
+        at = @At("HEAD"),
+        cancellable = true
     )
     private void tame(ItemEntity item, CallbackInfo ci) {
         if (!item.getStack().isOf(TAMING_ITEM)) return;
+        if (item.getThrower() == null || hasOwner()) {
+            ci.cancel();
+            return;
+        }
 
         this.setOwnerUuid(item.getThrower());
         this.setStanding(false);
