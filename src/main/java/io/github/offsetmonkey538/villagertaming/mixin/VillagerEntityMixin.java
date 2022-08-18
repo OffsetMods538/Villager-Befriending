@@ -50,6 +50,12 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
     @Unique
     @SuppressWarnings("WrongEntityDataParameterClass")
     private static final TrackedData<Boolean> STANDING = DataTracker.registerData(VillagerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    @Unique
+    @SuppressWarnings("WrongEntityDataParameterClass")
+    private static final TrackedData<Boolean> FOLLOWING_OWNER = DataTracker.registerData(VillagerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    @Unique
+    @SuppressWarnings("WrongEntityDataParameterClass")
+    private static final TrackedData<Boolean> WANDERING = DataTracker.registerData(VillagerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
 
     @Unique
@@ -116,6 +122,8 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
     protected void initDataTracker(CallbackInfo ci) {
         this.dataTracker.startTracking(OWNER_UUID, Optional.empty());
         this.dataTracker.startTracking(STANDING, false);
+        this.dataTracker.startTracking(FOLLOWING_OWNER, false);
+        this.dataTracker.startTracking(WANDERING, true);
     }
 
     @Inject(
@@ -127,6 +135,8 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
             nbt.putUuid("Owner", this.getOwnerUuid());
         }
         nbt.putBoolean("IsStanding", this.isStanding());
+        nbt.putBoolean("IsFollowingOwner", this.isFollowingOwner());
+        nbt.putBoolean("IsWandering", this.isWandering());
     }
 
     @Inject(
@@ -147,6 +157,18 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
             setStanding(nbt.getBoolean("IsStanding"));
         } else {
             setStanding(false);
+        }
+
+        if (nbt.contains("IsFollowingOwner")) {
+            setFollowingOwner(nbt.getBoolean("IsFollowingOwner"));
+        } else {
+            setFollowingOwner(false);
+        }
+
+        if (nbt.contains("IsWandering")) {
+            setWandering(nbt.getBoolean("IsWandering"));
+        } else {
+            setWandering(true);
         }
     }
 
@@ -193,6 +215,18 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
         return this.dataTracker.get(STANDING);
     }
 
+    @Unique
+    @Override
+    public boolean isFollowingOwner() {
+        return this.dataTracker.get(FOLLOWING_OWNER);
+    }
+
+    @Unique
+    @Override
+    public boolean isWandering() {
+        return this.dataTracker.get(WANDERING);
+    }
+
 
     /*
         Setters
@@ -208,4 +242,17 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
     public void setStanding(boolean value) {
         this.dataTracker.set(STANDING, value);
     }
+
+    @Unique
+    @Override
+    public void setFollowingOwner(boolean value) {
+        this.dataTracker.set(FOLLOWING_OWNER, value);
+    }
+
+    @Unique
+    @Override
+    public void setWandering(boolean value) {
+        this.dataTracker.set(WANDERING, value);
+    }
+
 }
