@@ -1,6 +1,7 @@
-package io.github.offsetmonkey538.villagertaming.client.screen;
+package io.github.offsetmonkey538.villagertaming.screen;
 
 
+import io.github.offsetmonkey538.villagertaming.screen.tamedvillager.TamedVillagerScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 
 import static io.github.offsetmonkey538.villagertaming.screen.ModScreenHandlers.TAMED_VILLAGER;

@@ -1,7 +1,6 @@
-package io.github.offsetmonkey538.villagertaming.client.screen;
+package io.github.offsetmonkey538.villagertaming.screen.tamedvillager;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import io.github.offsetmonkey538.villagertaming.screen.TamedVillagerScreenHandler;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.render.GameRenderer;

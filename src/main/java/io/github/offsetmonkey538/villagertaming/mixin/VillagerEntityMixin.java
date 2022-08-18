@@ -2,7 +2,7 @@ package io.github.offsetmonkey538.villagertaming.mixin;
 
 import io.github.offsetmonkey538.villagertaming.entity.IVillagerData;
 import io.github.offsetmonkey538.villagertaming.entity.goal.VillagerFollowOwnerGoal;
-import io.github.offsetmonkey538.villagertaming.screen.TamedVillagerScreenHandler;
+import io.github.offsetmonkey538.villagertaming.screen.tamedvillager.TamedVillagerScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;

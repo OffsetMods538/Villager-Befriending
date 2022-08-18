@@ -1,5 +1,6 @@
 package io.github.offsetmonkey538.villagertaming.screen;
 
+import io.github.offsetmonkey538.villagertaming.screen.tamedvillager.TamedVillagerScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;

@@ -1,6 +1,7 @@
-package io.github.offsetmonkey538.villagertaming.screen;
+package io.github.offsetmonkey538.villagertaming.screen.tamedvillager;
 
 import io.github.offsetmonkey538.villagertaming.entity.IVillagerData;
+import io.github.offsetmonkey538.villagertaming.screen.ModScreenHandlers;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -9,8 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 
-import static io.github.offsetmonkey538.villagertaming.client.screen.TamedVillagerScreen.TEST_BUTTON_2_ID;
-import static io.github.offsetmonkey538.villagertaming.client.screen.TamedVillagerScreen.TEST_BUTTON_ID;
+import static io.github.offsetmonkey538.villagertaming.screen.tamedvillager.TamedVillagerScreen.TEST_BUTTON_2_ID;
+import static io.github.offsetmonkey538.villagertaming.screen.tamedvillager.TamedVillagerScreen.TEST_BUTTON_ID;
 
 public class TamedVillagerScreenHandler extends ScreenHandler {
 
