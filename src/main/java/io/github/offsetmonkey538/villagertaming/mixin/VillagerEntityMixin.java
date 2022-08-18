@@ -134,7 +134,7 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
     public void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
         final NbtCompound tamedVillagerData = new NbtCompound();
 
-        if (this.getOwnerUuid() != null) {
+        if (this.hasOwner()) {
             tamedVillagerData.putUuid("Owner", this.getOwnerUuid());
         }
         tamedVillagerData.putBoolean("IsStanding", this.isStanding());
@@ -183,6 +183,11 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
     /*
         Getters
     */
+
+    @Unique
+    public boolean hasOwner() {
+        return this.getOwnerUuid() != null;
+    }
 
     @Unique
     @Override
