@@ -11,6 +11,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 
 import static io.github.offsetmonkey538.villagertaming.screen.tamedvillager.Buttons.*;
+import static io.github.offsetmonkey538.villagertaming.entrypoint.VillagerTamingMain.LOGGER;
 
 public class TamedVillagerScreenHandler extends ScreenHandler {
 
@@ -40,7 +41,22 @@ public class TamedVillagerScreenHandler extends ScreenHandler {
     @Override
     public boolean onButtonClick(PlayerEntity player, int id) {
         switch (id) {
-            // TODO: Handle buttons
+            case STAND -> {
+                this.villagerData.setStanding(true);
+                this.villagerData.setFollowingOwner(false);
+            }
+            case FOLLOW -> {
+                this.villagerData.setStanding(false);
+                this.villagerData.setFollowingOwner(true);
+            }
+            case WANDER -> {
+                this.villagerData.setStanding(false);
+                this.villagerData.setFollowingOwner(false);
+            }
+            default -> {
+                LOGGER.warn("Player [{}] pressed button with an unknown ID [{}]!", player.getName().getString(), id);
+                return false;
+            }
         }
         return true;
     }
