@@ -86,6 +86,8 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
         if (!item.getStack().isOf(TAMING_ITEM)) return;
 
         this.setOwnerUuid(item.getThrower());
+        this.setStanding(false);
+        this.setFollowingOwner(true);
         this.world.sendEntityStatus((VillagerEntity)(Object)this, EntityStatuses.ADD_VILLAGER_HEART_PARTICLES);
     }
 
