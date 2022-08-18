@@ -3,6 +3,7 @@ package io.github.offsetmonkey538.villagertaming.mixin;
 import io.github.offsetmonkey538.villagertaming.entity.IVillagerData;
 import io.github.offsetmonkey538.villagertaming.entity.goal.VillagerFollowOwnerGoal;
 import io.github.offsetmonkey538.villagertaming.screen.TamedVillagerScreenHandler;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
@@ -13,11 +14,14 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.ServerConfigHandler;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -35,14 +39,16 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 
-import static io.github.offsetmonkey538.villagertaming.entrypoint.VillagerTamingMain.MOD_ID;
-
 @Mixin(VillagerEntity.class)
 public abstract class VillagerEntityMixin extends MobEntity implements IVillagerData {
 
     @Unique
     @SuppressWarnings("WrongEntityDataParameterClass")
     private static final TrackedData<Optional<UUID>> OWNER_UUID = DataTracker.registerData(VillagerEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
+    @Unique
+    @SuppressWarnings("WrongEntityDataParameterClass")
+    private static final TrackedData<Boolean> STANDING = DataTracker.registerData(VillagerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
 
     @Unique
     private static Item TAMING_ITEM; //TODO: Add custom item made by combining emeralds, diamonds, and gold. Maybe some other valuable stuff too
@@ -83,9 +89,22 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
     )
     private void openScreen(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         if (!player.equals(getOwner()) || !player.isSneaking()) return;
-        player.openHandledScreen(new SimpleNamedScreenHandlerFactory(
-            (syncId, playerInventory, player2) -> new TamedVillagerScreenHandler(syncId, playerInventory), Text.translatable(String.format("entity.%s.villager.command_menu", MOD_ID), (getCustomName() != null ? getCustomName() : "Villager"))
-        ));
+        player.openHandledScreen(new ExtendedScreenHandlerFactory() {
+            @Override
+            public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
+                buf.writeVarInt(VillagerEntityMixin.this.getId());
+            }
+
+            @Override
+            public Text getDisplayName() {
+                return VillagerEntityMixin.this.getDisplayName();
+            }
+
+            @Override
+            public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
+                return new TamedVillagerScreenHandler(syncId, inv, (VillagerEntity) (Object) VillagerEntityMixin.this);
+            }
+        });
     }
 
     @Inject(
@@ -94,6 +113,7 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
     )
     protected void initDataTracker(CallbackInfo ci) {
         this.dataTracker.startTracking(OWNER_UUID, Optional.empty());
+        this.dataTracker.startTracking(STANDING, false);
     }
 
     @Inject(
@@ -104,6 +124,7 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
         if (this.getOwnerUuid() != null) {
             nbt.putUuid("Owner", this.getOwnerUuid());
         }
+        nbt.putBoolean("IsStanding", this.isStanding());
     }
 
     @Inject(
@@ -119,6 +140,12 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
             UUID = ServerConfigHandler.getPlayerUuidByName(this.getServer(), string);
         }
         setOwnerUuid(UUID);
+
+        if (nbt.contains("IsStanding")) {
+            setStanding(nbt.getBoolean("IsStanding"));
+        } else {
+            setStanding(false);
+        }
     }
 
     @Unique
@@ -128,15 +155,15 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
     }
 
     @Unique
-    public void setOwnerUuid(@Nullable UUID uuid) {
-        this.dataTracker.set(OWNER_UUID, Optional.ofNullable(uuid));
-    }
-
-    @Unique
     public void tame(@Nullable UUID player) {
         this.setOwnerUuid(player);
         this.world.sendEntityStatus((VillagerEntity)(Object)this, EntityStatuses.ADD_VILLAGER_HEART_PARTICLES);
     }
+
+
+    /*
+        Getters
+    */
 
     @Unique
     @Override
@@ -156,5 +183,27 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
         } catch (IllegalArgumentException illegalArgumentException) {
             return null;
         }
+    }
+
+    @Unique
+    @Override
+    public boolean isStanding() {
+        return this.dataTracker.get(STANDING);
+    }
+
+
+    /*
+        Setters
+    */
+
+    @Unique
+    public void setOwnerUuid(@Nullable UUID uuid) {
+        this.dataTracker.set(OWNER_UUID, Optional.ofNullable(uuid));
+    }
+
+    @Unique
+    @Override
+    public void setStanding(boolean value) {
+        this.dataTracker.set(STANDING, value);
     }
 }

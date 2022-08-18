@@ -1,5 +1,6 @@
 package io.github.offsetmonkey538.villagertaming.screen;
 
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
@@ -8,9 +9,9 @@ import net.minecraft.util.registry.Registry;
 import static io.github.offsetmonkey538.villagertaming.entrypoint.VillagerTamingMain.MOD_ID;
 
 public final class ModScreenHandlers {
-    public static final ScreenHandlerType<TamedVillagerScreenHandler> TAMED_VILLAGER = register("tamed_villager", new ScreenHandlerType<>(TamedVillagerScreenHandler::new));//new ScreenHandlerType<TamedVillagerScreenHandler>(TamedVillagerScreenHandler::new);
+    public static final ExtendedScreenHandlerType<TamedVillagerScreenHandler> TAMED_VILLAGER = register("tamed_villager", new ExtendedScreenHandlerType<>(TamedVillagerScreenHandler::new));
 
-    private static <T extends ScreenHandler> ScreenHandlerType<T> register(String id, ScreenHandlerType<T> type) {
+    private static <T extends ScreenHandler, H extends ScreenHandlerType<T>> H register(String id, H type) {
         return Registry.register(Registry.SCREEN_HANDLER, new Identifier(MOD_ID, id), type);
     }
 

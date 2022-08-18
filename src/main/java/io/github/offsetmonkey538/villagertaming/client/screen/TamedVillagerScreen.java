@@ -2,19 +2,15 @@ package io.github.offsetmonkey538.villagertaming.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.offsetmonkey538.villagertaming.screen.TamedVillagerScreenHandler;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import static io.github.offsetmonkey538.villagertaming.entrypoint.VillagerTamingMain.MOD_ID;
-import static io.github.offsetmonkey538.villagertaming.packet.ModPackets.TAMED_VILLAGER_MENU_BUTTON_PRESSED;
 
 public class TamedVillagerScreen extends HandledScreen<TamedVillagerScreenHandler> {
     private static final Identifier TEXTURE_PATH = new Identifier(MOD_ID, "textures/gui/tamed_villager.png");
@@ -49,15 +45,14 @@ public class TamedVillagerScreen extends HandledScreen<TamedVillagerScreenHandle
         addDrawableChild(new ButtonWidget(width / 2, height / 2, 20, 20, Text.of("Test"), button ->
             sendButtonPressedPacket(TEST_BUTTON_ID)
         ));
+
         addDrawableChild(new ButtonWidget(x + (backgroundWidth / 2 - 20), y + 20, 40, 20, Text.of("Test 2"), button ->
             sendButtonPressedPacket(TEST_BUTTON_2_ID)
         ));
     }
 
     private void sendButtonPressedPacket(int buttonId) {
-        PacketByteBuf byteBuffer = PacketByteBufs.create();
-        byteBuffer.writeInt(buttonId);
-
-        ClientPlayNetworking.send(TAMED_VILLAGER_MENU_BUTTON_PRESSED, byteBuffer);
+        if (client == null || client.interactionManager == null) return;
+        client.interactionManager.clickButton(getScreenHandler().syncId, buttonId);
     }
 }

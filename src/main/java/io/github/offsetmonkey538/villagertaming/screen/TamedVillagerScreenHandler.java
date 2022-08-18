@@ -1,35 +1,30 @@
 package io.github.offsetmonkey538.villagertaming.screen;
 
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import io.github.offsetmonkey538.villagertaming.entity.IVillagerData;
+import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 
 import static io.github.offsetmonkey538.villagertaming.client.screen.TamedVillagerScreen.TEST_BUTTON_2_ID;
 import static io.github.offsetmonkey538.villagertaming.client.screen.TamedVillagerScreen.TEST_BUTTON_ID;
-import static io.github.offsetmonkey538.villagertaming.packet.ModPackets.TAMED_VILLAGER_MENU_BUTTON_PRESSED;
-import static io.github.offsetmonkey538.villagertaming.entrypoint.VillagerTamingMain.LOGGER;
 
 public class TamedVillagerScreenHandler extends ScreenHandler {
 
     private final Inventory inventory;
+    private final IVillagerData villagerData;
 
-    public TamedVillagerScreenHandler(int syncId, PlayerInventory inventory) {
+    public TamedVillagerScreenHandler(int syncId, PlayerInventory inventory, PacketByteBuf buf) {
+        this(syncId, inventory, (inventory.player.world.getEntityById(buf.readVarInt()) instanceof VillagerEntity villager ? villager : null));
+    }
+
+    public TamedVillagerScreenHandler(int syncId, PlayerInventory inventory, VillagerEntity villager) {
         super(ModScreenHandlers.TAMED_VILLAGER, syncId);
         this.inventory = inventory;
-
-        ServerPlayNetworking.registerGlobalReceiver(TAMED_VILLAGER_MENU_BUTTON_PRESSED, (server, player, handler, buf, responseSender) -> {
-            int buttonId = buf.readInt();
-            server.execute(() -> {
-                switch (buttonId) {
-                    case TEST_BUTTON_ID -> LOGGER.info("First button has been pressed by {}", player.getDisplayName());
-                    case TEST_BUTTON_2_ID -> LOGGER.info("Second button has been pressed {}", player.getDisplayName());
-                    default -> LOGGER.warn("Button with id {} not found!", buttonId);
-                }
-            });
-        });
+        this.villagerData = (IVillagerData) villager;
     }
 
     @Override
@@ -40,5 +35,15 @@ public class TamedVillagerScreenHandler extends ScreenHandler {
     @Override
     public boolean canUse(PlayerEntity player) {
         return inventory.canPlayerUse(player);
+    }
+
+    @Override
+    public boolean onButtonClick(PlayerEntity player, int id) {
+        switch (id) {
+            case TEST_BUTTON_ID -> this.villagerData.setStanding(false);
+            case TEST_BUTTON_2_ID -> this.villagerData.setStanding(true);
+            default -> throw new UnsupportedOperationException(String.format("Player [%s] pressed button with an unknown ID [%s]", player.getName().getString(), id));
+        }
+        return true;
     }
 }
