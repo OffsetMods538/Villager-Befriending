@@ -46,17 +46,17 @@ public class TamedVillagerScreen extends HandledScreen<TamedVillagerScreenHandle
         int buttonHeight = 20;
 
         // Stay here
-        addDrawableChild(new ButtonWidget(x + 6, middleY - buttonHeight, buttonWidth, 20, Text.translatable(String.format("entity.%s.villager.command_menu.button.stay", MOD_ID)), button ->
+        addDrawableChild(new ButtonWidget(x + 6, middleY - buttonHeight / 2, buttonWidth, buttonHeight, Text.translatable(String.format("entity.%s.villager.command_menu.button.stay", MOD_ID)), button ->
             sendButtonPressedPacket(STAND)
         ));
 
         // Follow me
-        addDrawableChild(new ButtonWidget(x + (backgroundWidth / 2) - buttonWidth/2, middleY - 10, buttonWidth, buttonHeight, Text.translatable(String.format("entity.%s.villager.command_menu.button.follow", MOD_ID)), button ->
+        addDrawableChild(new ButtonWidget(x + (backgroundWidth / 2) - buttonWidth / 2, middleY - buttonHeight / 2, buttonWidth, buttonHeight, Text.translatable(String.format("entity.%s.villager.command_menu.button.follow", MOD_ID)), button ->
             sendButtonPressedPacket(FOLLOW)
         ));
 
         // Wander around
-        addDrawableChild(new ButtonWidget((x + (backgroundWidth) - 6) - buttonWidth, middleY - 10, buttonWidth, buttonHeight, Text.translatable(String.format("entity.%s.villager.command_menu.button.wander", MOD_ID)), button ->
+        addDrawableChild(new ButtonWidget((x + (backgroundWidth) - 6) - buttonWidth, middleY - buttonHeight / 2, buttonWidth, buttonHeight, Text.translatable(String.format("entity.%s.villager.command_menu.button.wander", MOD_ID)), button ->
             sendButtonPressedPacket(WANDER)
         ));
     }
