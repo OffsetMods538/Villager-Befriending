@@ -53,10 +53,6 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
     @Unique
     @SuppressWarnings("WrongEntityDataParameterClass")
     private static final TrackedData<Boolean> FOLLOWING_OWNER = DataTracker.registerData(VillagerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    @Unique
-    @SuppressWarnings("WrongEntityDataParameterClass")
-    private static final TrackedData<Boolean> WANDERING = DataTracker.registerData(VillagerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-
 
     @Unique
     private static Item TAMING_ITEM; //TODO: Add custom item made by combining emeralds, diamonds, and gold. Maybe some other valuable stuff too
@@ -123,7 +119,6 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
         this.dataTracker.startTracking(OWNER_UUID, Optional.empty());
         this.dataTracker.startTracking(STANDING, false);
         this.dataTracker.startTracking(FOLLOWING_OWNER, false);
-        this.dataTracker.startTracking(WANDERING, true);
     }
 
     @Inject(
@@ -131,12 +126,15 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
         at = @At("TAIL")
     )
     public void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
+        final NbtCompound tamedVillagerData = new NbtCompound();
+
         if (this.getOwnerUuid() != null) {
-            nbt.putUuid("Owner", this.getOwnerUuid());
+            tamedVillagerData.putUuid("Owner", this.getOwnerUuid());
         }
-        nbt.putBoolean("IsStanding", this.isStanding());
-        nbt.putBoolean("IsFollowingOwner", this.isFollowingOwner());
-        nbt.putBoolean("IsWandering", this.isWandering());
+        tamedVillagerData.putBoolean("IsStanding", this.isStanding());
+        tamedVillagerData.putBoolean("IsFollowingOwner", this.isFollowingOwner());
+
+        nbt.put("TamedVillagerData", tamedVillagerData);
     }
 
     @Inject(
@@ -144,32 +142,29 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
         at = @At("TAIL")
     )
     public void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo ci) {
-        UUID UUID;
-        if (nbt.containsUuid("Owner")) {
-            UUID = nbt.getUuid("Owner");
-        } else {
-            String string = nbt.getString("Owner");
-            UUID = ServerConfigHandler.getPlayerUuidByName(this.getServer(), string);
-        }
-        setOwnerUuid(UUID);
+        if (nbt.contains("TamedVillagerData")) {
+            final NbtCompound tamedVillagerData = nbt.getCompound("TamedVillagerData");
 
-        if (nbt.contains("IsStanding")) {
-            setStanding(nbt.getBoolean("IsStanding"));
-        } else {
-            setStanding(false);
-        }
+            UUID UUID;
+            if (tamedVillagerData.containsUuid("Owner")) {
+                UUID = tamedVillagerData.getUuid("Owner");
+            } else {
+                String string = tamedVillagerData.getString("Owner");
+                UUID = ServerConfigHandler.getPlayerUuidByName(this.getServer(), string);
+            }
+            setOwnerUuid(UUID);
 
-        if (nbt.contains("IsFollowingOwner")) {
-            setFollowingOwner(nbt.getBoolean("IsFollowingOwner"));
-        } else {
-            setFollowingOwner(false);
-        }
+            if (tamedVillagerData.contains("IsStanding")) {
+                setStanding(tamedVillagerData.getBoolean("IsStanding"));
+            }
 
-        if (nbt.contains("IsWandering")) {
-            setWandering(nbt.getBoolean("IsWandering"));
-        } else {
-            setWandering(true);
+            if (tamedVillagerData.contains("IsFollowingOwner")) {
+                setFollowingOwner(tamedVillagerData.getBoolean("IsFollowingOwner"));
+            }
+            return;
         }
+        setStanding(false);
+        setFollowingOwner(false);
     }
 
     @Unique
@@ -221,12 +216,6 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
         return this.dataTracker.get(FOLLOWING_OWNER);
     }
 
-    @Unique
-    @Override
-    public boolean isWandering() {
-        return this.dataTracker.get(WANDERING);
-    }
-
 
     /*
         Setters
@@ -248,11 +237,4 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
     public void setFollowingOwner(boolean value) {
         this.dataTracker.set(FOLLOWING_OWNER, value);
     }
-
-    @Unique
-    @Override
-    public void setWandering(boolean value) {
-        this.dataTracker.set(WANDERING, value);
-    }
-
 }

@@ -17,7 +17,7 @@ public abstract class LivingEntityMixin {
     )
     public void villagertaming$makeStandingVillagersImmobile(CallbackInfoReturnable<Boolean> cir) {
         if (this instanceof IVillagerData villagerData) {
-            if (villagerData.isStanding() && !(villagerData.isFollowingOwner() || villagerData.isWandering())) {
+            if (villagerData.isStanding() && !(villagerData.isFollowingOwner())) {
                 cir.setReturnValue(true);
             }
         }

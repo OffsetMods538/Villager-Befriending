@@ -18,8 +18,6 @@ public interface IVillagerData extends Tameable {
 
     boolean isFollowingOwner();
 
-    boolean isWandering();
-
 
     /*
         Setters
@@ -28,6 +26,4 @@ public interface IVillagerData extends Tameable {
     void setStanding(boolean value);
 
     void setFollowingOwner(boolean value);
-
-    void setWandering(boolean value);
 }
