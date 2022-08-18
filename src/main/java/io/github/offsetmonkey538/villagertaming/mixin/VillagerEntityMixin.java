@@ -2,6 +2,7 @@ package io.github.offsetmonkey538.villagertaming.mixin;
 
 import io.github.offsetmonkey538.villagertaming.entity.IVillagerData;
 import io.github.offsetmonkey538.villagertaming.entity.goal.VillagerFollowOwnerGoal;
+import io.github.offsetmonkey538.villagertaming.item.ModItems;
 import io.github.offsetmonkey538.villagertaming.screen.tamedvillager.TamedVillagerScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.entity.EntityStatuses;
@@ -55,7 +56,7 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
     private static final TrackedData<Boolean> FOLLOWING_OWNER = DataTracker.registerData(VillagerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     @Unique
-    private static Item TAMING_ITEM; //TODO: Add custom item made by combining emeralds, diamonds, and gold. Maybe some other valuable stuff too
+    private static Item TAMING_ITEM;
 
     protected VillagerEntityMixin(EntityType<? extends MobEntity> entityType, World world) {
         super(entityType, world);
@@ -71,7 +72,7 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
     )
     @SuppressWarnings("unchecked")
     private static <E> E[] changeGatherableItems(E[] original) {
-        TAMING_ITEM = Items.APPLE;
+        TAMING_ITEM = ModItems.TOTAME_ITEM;
 
         E[] result = Arrays.copyOf(original, original.length + 1);
         result[original.length] = (E) TAMING_ITEM;
