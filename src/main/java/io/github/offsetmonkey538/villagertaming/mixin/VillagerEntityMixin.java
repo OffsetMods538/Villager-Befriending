@@ -89,7 +89,8 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
 
     @Inject(
         method = "interactMob",
-        at = @At("HEAD")
+        at = @At("HEAD"),
+        cancellable = true
     )
     private void openScreen(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         if (!player.equals(getOwner()) || !player.isSneaking()) return;
@@ -109,6 +110,7 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
                 return new TamedVillagerScreenHandler(syncId, inv, (VillagerEntity) (Object) VillagerEntityMixin.this);
             }
         });
+        cir.setReturnValue(ActionResult.success(this.world.isClient));
     }
 
     @Inject(
