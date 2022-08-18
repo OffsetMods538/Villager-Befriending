@@ -6,11 +6,28 @@ import org.jetbrains.annotations.Nullable;
 
 public interface IVillagerData extends Tameable {
 
+    /*
+        Getters
+    */
+
     @Override
     @Nullable
     LivingEntity getOwner();
 
     boolean isStanding();
 
+    boolean isFollowingOwner();
+
+    boolean isWandering();
+
+
+    /*
+        Setters
+    */
+
     void setStanding(boolean value);
+
+    void setFollowingOwner(boolean value);
+
+    void setWandering(boolean value);
 }
