@@ -10,8 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 
-import static io.github.offsetmonkey538.villagertaming.screen.tamedvillager.Buttons.TEST_BUTTON_2_ID;
-import static io.github.offsetmonkey538.villagertaming.screen.tamedvillager.Buttons.TEST_BUTTON_ID;
+import static io.github.offsetmonkey538.villagertaming.screen.tamedvillager.Buttons.*;
 
 public class TamedVillagerScreenHandler extends ScreenHandler {
 
