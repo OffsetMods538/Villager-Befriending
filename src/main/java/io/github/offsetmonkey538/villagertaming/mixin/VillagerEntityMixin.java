@@ -39,6 +39,8 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 
+import static io.github.offsetmonkey538.villagertaming.entrypoint.VillagerTamingMain.MOD_ID;
+
 @Mixin(VillagerEntity.class)
 public abstract class VillagerEntityMixin extends MobEntity implements IVillagerData {
 
@@ -97,7 +99,7 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
 
             @Override
             public Text getDisplayName() {
-                return VillagerEntityMixin.this.getDisplayName();
+                return Text.translatable(String.format("entity.%s.villager.command_menu", MOD_ID), VillagerEntityMixin.this.getName());
             }
 
             @Override
