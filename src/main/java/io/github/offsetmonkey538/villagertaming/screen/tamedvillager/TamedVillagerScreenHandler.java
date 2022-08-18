@@ -40,9 +40,7 @@ public class TamedVillagerScreenHandler extends ScreenHandler {
     @Override
     public boolean onButtonClick(PlayerEntity player, int id) {
         switch (id) {
-            case TEST_BUTTON_ID -> this.villagerData.setStanding(false);
-            case TEST_BUTTON_2_ID -> this.villagerData.setStanding(true);
-            default -> throw new UnsupportedOperationException(String.format("Player [%s] pressed button with an unknown ID [%s]", player.getName().getString(), id));
+            // TODO: Handle buttons
         }
         return true;
     }
