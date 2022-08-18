@@ -17,6 +17,8 @@ public class TamedVillagerScreen extends HandledScreen<TamedVillagerScreenHandle
 
     public TamedVillagerScreen(TamedVillagerScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
+        this.backgroundWidth = 256;
+        this.backgroundHeight = 72;
     }
 
     @Override
