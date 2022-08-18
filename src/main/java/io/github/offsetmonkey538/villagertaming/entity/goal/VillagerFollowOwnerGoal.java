@@ -46,9 +46,9 @@ public class VillagerFollowOwnerGoal extends AbstractVillagerGoal {
         if (livingEntity.isSpectator()) {
             return false;
         }
-        // if (this.entity.isSitting()) {
-        //     return false;
-        // }
+        if (!this.villagerData.isFollowingOwner() || this.villagerData.isStanding() || this.villagerData.isWandering()) {
+            return false;
+        }
         if (this.villager.squaredDistanceTo(livingEntity) < (double)(this.minDistance * this.minDistance)) {
             return false;
         }
@@ -61,9 +61,9 @@ public class VillagerFollowOwnerGoal extends AbstractVillagerGoal {
         if (this.navigation.isIdle()) {
             return false;
         }
-        // if (this.entity.isSitting()) {
-        //     return false;
-        // }
+        if (!this.villagerData.isFollowingOwner() || this.villagerData.isStanding() || this.villagerData.isWandering()) {
+            return false;
+        }
         return !(this.villager.squaredDistanceTo(this.owner) <= (double)(this.maxDistance * this.maxDistance));
     }
 
