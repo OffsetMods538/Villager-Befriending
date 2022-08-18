@@ -41,12 +41,23 @@ public class TamedVillagerScreen extends HandledScreen<TamedVillagerScreenHandle
         super.init();
         titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
 
-        addDrawableChild(new ButtonWidget(width / 2, height / 2, 20, 20, Text.of("Test"), button ->
-            sendButtonPressedPacket(TEST_BUTTON_ID)
+        int middleY = y + (backgroundHeight / 2);
+        int buttonWidth = 80;
+        int buttonHeight = 20;
+
+        // Stay here
+        addDrawableChild(new ButtonWidget(x + 6, middleY - buttonHeight, buttonWidth, 20, Text.translatable(String.format("entity.%s.villager.command_menu.button.stay", MOD_ID)), button ->
+            sendButtonPressedPacket(STAND)
         ));
 
-        addDrawableChild(new ButtonWidget(x + (backgroundWidth / 2 - 20), y + 20, 40, 20, Text.of("Test 2"), button ->
-            sendButtonPressedPacket(TEST_BUTTON_2_ID)
+        // Follow me
+        addDrawableChild(new ButtonWidget(x + (backgroundWidth / 2) - buttonWidth/2, middleY - 10, buttonWidth, buttonHeight, Text.translatable(String.format("entity.%s.villager.command_menu.button.follow", MOD_ID)), button ->
+            sendButtonPressedPacket(FOLLOW)
+        ));
+
+        // Wander around
+        addDrawableChild(new ButtonWidget((x + (backgroundWidth) - 6) - buttonWidth, middleY - 10, buttonWidth, buttonHeight, Text.translatable(String.format("entity.%s.villager.command_menu.button.wander", MOD_ID)), button ->
+            sendButtonPressedPacket(WANDER)
         ));
     }
 
