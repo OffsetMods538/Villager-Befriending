@@ -82,9 +82,11 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
         method = "loot",
         at = @At("HEAD")
     )
-    private void loot(ItemEntity item, CallbackInfo ci) {
+    private void tame(ItemEntity item, CallbackInfo ci) {
         if (!item.getStack().isOf(TAMING_ITEM)) return;
-        tame(item.getThrower());
+
+        this.setOwnerUuid(item.getThrower());
+        this.world.sendEntityStatus((VillagerEntity)(Object)this, EntityStatuses.ADD_VILLAGER_HEART_PARTICLES);
     }
 
     @Inject(
@@ -173,12 +175,6 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
     @Override
     protected void initGoals() {
         this.goalSelector.add(6, new VillagerFollowOwnerGoal((VillagerEntity) (Object)this, 0.5, 10.0f, 2.0f, false));
-    }
-
-    @Unique
-    public void tame(@Nullable UUID player) {
-        this.setOwnerUuid(player);
-        this.world.sendEntityStatus((VillagerEntity)(Object)this, EntityStatuses.ADD_VILLAGER_HEART_PARTICLES);
     }
 
 
