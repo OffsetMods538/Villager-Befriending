@@ -10,12 +10,11 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import static io.github.offsetmonkey538.villagertaming.entrypoint.VillagerTamingMain.MOD_ID;
+import static io.github.offsetmonkey538.villagertaming.screen.tamedvillager.Buttons.TEST_BUTTON_2_ID;
+import static io.github.offsetmonkey538.villagertaming.screen.tamedvillager.Buttons.TEST_BUTTON_ID;
 
 public class TamedVillagerScreen extends HandledScreen<TamedVillagerScreenHandler> {
     private static final Identifier TEXTURE_PATH = new Identifier(MOD_ID, "textures/gui/tamed_villager.png");
-
-    public static final int TEST_BUTTON_ID = 1;
-    public static final int TEST_BUTTON_2_ID = 2;
 
     public TamedVillagerScreen(TamedVillagerScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
