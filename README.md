@@ -9,7 +9,7 @@ What about making them stay in one place without any tricks?
 Well want no more because with this mod you can do **just that**!
 
 ## But how?
-To *befriend* a villager, you need to make yourself a ``Totem of Friendship``.
+To *befriend* a villager, you will need to make yourself a ``Totem of Friendship``.
 <br />
 <img src="https://github.com/OffsetMonkey538/Villager-Befriending/blob/master/images/totem_of_friendship_recipe.png?raw=true" alt="Totem of Friendship recipe" width="242" height="128" />
 <br />
