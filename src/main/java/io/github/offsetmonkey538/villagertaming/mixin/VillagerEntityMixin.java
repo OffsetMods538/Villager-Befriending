@@ -12,6 +12,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -86,7 +87,8 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
     )
     private void tame(ItemEntity item, CallbackInfo ci) {
         if (!item.getStack().isOf(TAMING_ITEM)) return;
-        if (item.getThrower() == null || hasOwner()) {
+        PlayerEntity player = item.getWorld().getPlayerByUuid(item.getThrower());
+        if (player == null || hasOwner() || isBaby() || !player.hasStatusEffect(StatusEffects.HERO_OF_THE_VILLAGE)) {
             ci.cancel();
             return;
         }
