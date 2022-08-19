@@ -4,7 +4,7 @@
 name: Publish Mod
 on:
   release:
-    types: [ created ]
+    types: [ released ]
 
 jobs:
   publishMod:
