@@ -9,7 +9,8 @@
     "OffsetMonkey538"
   ],
   "contact": {
-    "sources": "${sources}"
+    "sources": "${sources}",
+    "issues": "${sources}/issues"
   },
 
   "license": "${license}",
