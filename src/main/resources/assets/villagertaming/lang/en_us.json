@@ -1,8 +1,0 @@
-{
-  "entity.villagertaming.villager.command_menu": "%s Command Menu",
-  "entity.villagertaming.villager.command_menu.button.stay": "Stay Here",
-  "entity.villagertaming.villager.command_menu.button.follow": "Follow Me",
-  "entity.villagertaming.villager.command_menu.button.wander": "Wander Around",
-  "item.villagertaming.totame": "Totame",
-  "item.villagertaming.totame.tooltip": "Throw this to a villager to tame it."
-}

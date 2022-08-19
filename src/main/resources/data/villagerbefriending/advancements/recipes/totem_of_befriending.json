@@ -1,0 +1,51 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "villagerbefriending:totem_of_befriending"
+      }
+    },
+    "has_any_ingredient": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:diamond",
+              "minecraft:emerald",
+              "minecraft:gold_ingot",
+              "minecraft:totem_of_undying",
+              "minecraft:emerald_block"
+            ]
+          }
+        ]
+      }
+    },
+    "has_totem_of_befriending": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "villagerbefriending:totem_of_befriending"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_any_ingredient",
+      "has_totem_of_befriending",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "villagerbefriending:totem_of_befriending"
+    ]
+  }
+}
