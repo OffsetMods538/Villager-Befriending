@@ -11,7 +11,12 @@ import static io.github.offsetmonkey538.villagertaming.entrypoint.VillagerTaming
 
 public class ModItems {
 
-    public static final TotameItem TOTAME_ITEM = register(new TotameItem(new FabricItemSettings().group(ItemGroup.MISC).rarity(Rarity.RARE)), "totame");
+    public static final TotameItem TOTAME_ITEM = register(
+        new TotameItem(new FabricItemSettings()
+            .group(ItemGroup.MISC)
+            .rarity(Rarity.RARE)
+            .maxCount(1)),
+        "totame");
 
     private static <T extends Item> T register(T item, String id) {
         return Registry.register(Registry.ITEM, new Identifier(MOD_ID, id), item);
