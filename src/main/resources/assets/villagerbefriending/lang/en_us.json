@@ -3,6 +3,6 @@
   "entity.villagerbefriending.villager.command_menu.button.stay": "Stay Here",
   "entity.villagerbefriending.villager.command_menu.button.follow": "Follow Me",
   "entity.villagerbefriending.villager.command_menu.button.wander": "Wander Around",
-  "item.villagerbefriending.totem_of_befriending": "Totem of Befriending",
-  "item.villagerbefriending.totem_of_befriending.tooltip": "Throw this to a villager to befriend it."
+  "item.villagerbefriending.totem_of_befriending": "Totem of Friendship",
+  "item.villagerbefriending.totem_of_befriending.tooltip": "Give this to a villager to befriend it."
 }
