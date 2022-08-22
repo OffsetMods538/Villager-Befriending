@@ -1,0 +1,32 @@
+{
+  "display": {
+    "icon": {
+      "item": "villagerbefriending:totem_of_befriending"
+    },
+    "title": {
+      "translate": "advancements.villagerbefriending.get_totem_of_befriending.title"
+    },
+    "description": {
+      "translate": "advancements.villagerbefriending.get_totem_of_befriending.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "villagerbefriending:root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "villagerbefriending:totem_of_befriending"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
