@@ -4,5 +4,21 @@
   "entity.villagerbefriending.villager.command_menu.button.follow": "Follow Me",
   "entity.villagerbefriending.villager.command_menu.button.wander": "Wander Around",
   "item.villagerbefriending.totem_of_befriending": "Totem of Friendship",
-  "item.villagerbefriending.totem_of_befriending.tooltip": "Give this to a villager to befriend it."
+  "item.villagerbefriending.totem_of_befriending.tooltip": "Give this to a villager to befriend it.",
+  "advancements.villagerbefriending.root.title": "Villager Befriending",
+  "advancements.villagerbefriending.root.description": "Don't have friends irl?\nBe friends with a minecraft villager!",
+  "advancements.villagerbefriending.get_totem_of_undying.title": "It's all about friendship",
+  "advancements.villagerbefriending.get_totem_of_undying.description": "Craft a Totem of Friendship",
+  "advancements.villagerbefriending.get_totem_of_befriending.title": "It's all about Friendship",
+  "advancements.villagerbefriending.get_totem_of_befriending.description": "Craft a Totem of Friendship",
+  "advancements.villagerbefriending.get_hero_of_the_village.title": "You're the hero!",
+  "advancements.villagerbefriending.get_hero_of_the_village.description": "Get Hero of the Village by defeating a raid",
+  "advancements.villagerbefriending.befriend_a_villager.title": "Best friends!",
+  "advancements.villagerbefriending.befriend_a_villager.description": "Befriend a villager",
+  "advancements.villagerbefriending.press_follow_button.title": "Start following me, creep!",
+  "advancements.villagerbefriending.press_follow_button.description": "Tell a villager to follow you",
+  "advancements.villagerbefriending.press_wander_button.title": "Where are you going?",
+  "advancements.villagerbefriending.press_wander_button.description": "Tell a villager to wander around",
+  "advancements.villagerbefriending.press_stand_button.title": "Honey, I Froze the Villager!",
+  "advancements.villagerbefriending.press_stand_button.description": "Tell a villager to stay here"
 }
