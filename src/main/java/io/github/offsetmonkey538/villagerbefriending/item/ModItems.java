@@ -18,6 +18,9 @@ public class ModItems {
             .maxCount(1)),
         "totem_of_befriending");
 
+    // Advancement icon
+    public static final Item HEART = register(new Item(new FabricItemSettings()), "heart");
+
     private static <T extends Item> T register(T item, String id) {
         return Registry.register(Registry.ITEM, new Identifier(MOD_ID, id), item);
     }
