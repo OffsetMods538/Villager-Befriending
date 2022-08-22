@@ -1,6 +1,5 @@
 package io.github.offsetmonkey538.villagerbefriending.mixin;
 
-import io.github.offsetmonkey538.villagerbefriending.advancement.ModCriteria;
 import io.github.offsetmonkey538.villagerbefriending.entity.IVillagerData;
 import io.github.offsetmonkey538.villagerbefriending.entity.goal.VillagerFollowOwnerGoal;
 import io.github.offsetmonkey538.villagerbefriending.item.ModItems;
@@ -41,7 +40,6 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 
-import static io.github.offsetmonkey538.villagerbefriending.advancement.ModCriteria.VILLAGER_BEFRIENDED;
 import static io.github.offsetmonkey538.villagerbefriending.entrypoint.VillagerBefriendingMain.MOD_ID;
 
 @Mixin(VillagerEntity.class)
@@ -97,7 +95,6 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
         this.setOwnerUuid(item.getThrower());
         this.setStanding(false);
         this.setFollowingOwner(true);
-        if (player instanceof ServerPlayerEntity serverPlayer) VILLAGER_BEFRIENDED.trigger(serverPlayer);
         this.world.sendEntityStatus((VillagerEntity)(Object)this, EntityStatuses.ADD_VILLAGER_HEART_PARTICLES);
     }
 
