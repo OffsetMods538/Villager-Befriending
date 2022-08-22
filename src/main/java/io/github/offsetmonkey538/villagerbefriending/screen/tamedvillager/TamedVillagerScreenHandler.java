@@ -1,5 +1,6 @@
 package io.github.offsetmonkey538.villagerbefriending.screen.tamedvillager;
 
+import io.github.offsetmonkey538.villagerbefriending.advancement.ModCriteria;
 import io.github.offsetmonkey538.villagerbefriending.entity.IVillagerData;
 import io.github.offsetmonkey538.villagerbefriending.screen.ModScreenHandlers;
 import net.minecraft.entity.passive.VillagerEntity;
@@ -9,7 +10,9 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
+import net.minecraft.server.network.ServerPlayerEntity;
 
+import static io.github.offsetmonkey538.villagerbefriending.advancement.ModCriteria.VILLAGER_MENU_BUTTON_PRESSED;
 import static io.github.offsetmonkey538.villagerbefriending.screen.tamedvillager.Buttons.*;
 import static io.github.offsetmonkey538.villagerbefriending.entrypoint.VillagerBefriendingMain.LOGGER;
 
@@ -58,6 +61,7 @@ public class TamedVillagerScreenHandler extends ScreenHandler {
                 return false;
             }
         }
+        if (player instanceof ServerPlayerEntity serverPlayer) VILLAGER_MENU_BUTTON_PRESSED.trigger(serverPlayer, id);
         return true;
     }
 }
