@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "villagerbefriending:heart"
+    },
+    "title": {
+      "translate": "advancements.villagerbefriending.befriend_a_villager.title"
+    },
+    "description": {
+      "translate": "advancements.villagerbefriending.befriend_a_villager.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "villagerbefriending:get_hero_of_the_village",
+  "criteria": {
+    "requirement": {
+      "trigger": "villagerbefriending:villager_befriended"
+    }
+  }
+}
