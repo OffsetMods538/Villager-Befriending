@@ -1,5 +1,6 @@
 package io.github.offsetmonkey538.villagerbefriending.mixin;
 
+import io.github.offsetmonkey538.villagerbefriending.advancement.ModCriteria;
 import io.github.offsetmonkey538.villagerbefriending.entity.IVillagerData;
 import io.github.offsetmonkey538.villagerbefriending.entity.goal.VillagerFollowOwnerGoal;
 import io.github.offsetmonkey538.villagerbefriending.item.ModItems;
@@ -92,6 +93,7 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
             return;
         }
 
+        if (player instanceof ServerPlayerEntity serverPlayer) ModCriteria.VILLAGER_BEFRIENDED.trigger(serverPlayer);
         this.setOwnerUuid(item.getThrower());
         this.setStanding(false);
         this.setFollowingOwner(true);

@@ -1,5 +1,6 @@
 package io.github.offsetmonkey538.villagerbefriending.entrypoint;
 
+import io.github.offsetmonkey538.villagerbefriending.advancement.ModCriteria;
 import io.github.offsetmonkey538.villagerbefriending.item.ModItems;
 import io.github.offsetmonkey538.villagerbefriending.screen.ModScreenHandlers;
 import net.fabricmc.api.ModInitializer;
@@ -13,6 +14,7 @@ public class VillagerBefriendingMain implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ModItems.register();
+		ModCriteria.register();
 		ModScreenHandlers.register();
 	}
 }
