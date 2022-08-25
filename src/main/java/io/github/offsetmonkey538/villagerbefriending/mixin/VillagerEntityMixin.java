@@ -24,6 +24,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.ServerConfigHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
@@ -113,7 +114,7 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
 
             @Override
             public Text getDisplayName() {
-                return Text.translatable(String.format("entity.%s.villager.command_menu", MOD_ID), VillagerEntityMixin.this.getName());
+                return new TranslatableText(String.format("entity.%s.villager.command_menu", MOD_ID), VillagerEntityMixin.this.getName());
             }
 
             @Override
