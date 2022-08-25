@@ -7,6 +7,7 @@ import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 
 import static io.github.offsetmonkey538.villagerbefriending.entrypoint.VillagerBefriendingMain.MOD_ID;
@@ -46,17 +47,17 @@ public class TamedVillagerScreen extends HandledScreen<TamedVillagerScreenHandle
         int buttonHeight = 20;
 
         // Stay here
-        addDrawableChild(new ButtonWidget(x + 6, middleY - buttonHeight / 2, buttonWidth, buttonHeight, Text.translatable(String.format("entity.%s.villager.command_menu.button.stay", MOD_ID)), button ->
+        addDrawableChild(new ButtonWidget(x + 6, middleY - buttonHeight / 2, buttonWidth, buttonHeight, new TranslatableText(String.format("entity.%s.villager.command_menu.button.stay", MOD_ID)), button ->
             sendButtonPressedPacket(STAND)
         ));
 
         // Follow me
-        addDrawableChild(new ButtonWidget(x + (backgroundWidth / 2) - buttonWidth / 2, middleY - buttonHeight / 2, buttonWidth, buttonHeight, Text.translatable(String.format("entity.%s.villager.command_menu.button.follow", MOD_ID)), button ->
+        addDrawableChild(new ButtonWidget(x + (backgroundWidth / 2) - buttonWidth / 2, middleY - buttonHeight / 2, buttonWidth, buttonHeight, new TranslatableText(String.format("entity.%s.villager.command_menu.button.follow", MOD_ID)), button ->
             sendButtonPressedPacket(FOLLOW)
         ));
 
         // Wander around
-        addDrawableChild(new ButtonWidget((x + (backgroundWidth) - 6) - buttonWidth, middleY - buttonHeight / 2, buttonWidth, buttonHeight, Text.translatable(String.format("entity.%s.villager.command_menu.button.wander", MOD_ID)), button ->
+        addDrawableChild(new ButtonWidget((x + (backgroundWidth) - 6) - buttonWidth, middleY - buttonHeight / 2, buttonWidth, buttonHeight, new TranslatableText(String.format("entity.%s.villager.command_menu.button.wander", MOD_ID)), button ->
             sendButtonPressedPacket(WANDER)
         ));
     }
