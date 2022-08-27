@@ -29,7 +29,7 @@
     "${id}.mixins.json"
   ],
   "depends": {
-    "fabric-api": "*"
+    "fabric": "*"
   },
   "custom": {
     "modmanager": {
