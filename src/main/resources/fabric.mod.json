@@ -10,7 +10,7 @@
   ],
   "contributors": [
     "Erlend"
-  ]
+  ],
   "contact": {
     "sources": "${sources}",
     "issues": "${sources}/issues"
