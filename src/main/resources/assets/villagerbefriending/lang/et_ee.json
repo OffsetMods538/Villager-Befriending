@@ -1,0 +1,8 @@
+{
+  "entity.villagerbefriending.villager.command_menu": "%s Käsumenüü",
+  "entity.villagerbefriending.villager.command_menu.button.stay": "Seisa Siin",
+  "entity.villagerbefriending.villager.command_menu.button.follow": "Järgi Mind",
+  "entity.villagerbefriending.villager.command_menu.button.wander": "Rända Ringi",
+  "item.villagerbefriending.totem_of_befriending": "Sõpruse Tootem",
+  "item.villagerbefriending.totem_of_befriending.tooltip": "Anna see külaenalikule, et temaga sõbruneda."
+}
