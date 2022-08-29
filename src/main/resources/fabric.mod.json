@@ -8,6 +8,9 @@
   "authors": [
     "OffsetMonkey538"
   ],
+  "contributors": [
+    "Erlend"
+  ]
   "contact": {
     "sources": "${sources}",
     "issues": "${sources}/issues"
