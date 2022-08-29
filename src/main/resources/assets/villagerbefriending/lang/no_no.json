@@ -1,0 +1,8 @@
+{
+  "entity.villagerbefriending.villager.command_menu": "%s Kommando Meny",
+  "entity.villagerbefriending.villager.command_menu.button.stay": "Bli her",
+  "entity.villagerbefriending.villager.command_menu.button.follow": "Følg meg",
+  "entity.villagerbefriending.villager.command_menu.button.wander": "Gå rundt",
+  "item.villagerbefriending.totem_of_befriending": "Totem av Vennskap",
+  "item.villagerbefriending.totem_of_befriending.tooltip": "Gi dette til en landsbyboer for å bli venn med den."
+}
