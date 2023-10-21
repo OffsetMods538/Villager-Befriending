@@ -19,7 +19,7 @@ public class TamedVillagerScreenHandler extends ScreenHandler {
     private final IVillagerData villagerData;
 
     public TamedVillagerScreenHandler(int syncId, PlayerInventory inventory, PacketByteBuf buf) {
-        this(syncId, inventory, (inventory.player.world.getEntityById(buf.readVarInt()) instanceof VillagerEntity villager ? villager : null));
+        this(syncId, inventory, (inventory.player.getWorld().getEntityById(buf.readVarInt()) instanceof VillagerEntity villager ? villager : null));
     }
 
     public TamedVillagerScreenHandler(int syncId, PlayerInventory inventory, VillagerEntity villager) {
@@ -29,7 +29,7 @@ public class TamedVillagerScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public ItemStack transferSlot(PlayerEntity player, int index) {
+    public ItemStack quickMove(PlayerEntity player, int index) {
         return null;
     }
 

@@ -3,6 +3,7 @@ package io.github.offsetmonkey538.villagerbefriending.mixin;
 import io.github.offsetmonkey538.villagerbefriending.entity.IVillagerData;
 import io.github.offsetmonkey538.villagerbefriending.entity.goal.VillagerFollowOwnerGoal;
 import io.github.offsetmonkey538.villagerbefriending.item.ModItems;
+import io.github.offsetmonkey538.villagerbefriending.mixin.accessor.ItemEntityAccessor;
 import io.github.offsetmonkey538.villagerbefriending.screen.tamedvillager.TamedVillagerScreenHandler;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.entity.EntityStatuses;
@@ -86,16 +87,19 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
     )
     private void tame(ItemEntity item, CallbackInfo ci) {
         if (!item.getStack().isOf(TAMING_ITEM)) return;
-        PlayerEntity player = item.getWorld().getPlayerByUuid(item.getThrower());
+
+        ItemEntityAccessor itemEntityAccessor = (ItemEntityAccessor) item;
+
+        PlayerEntity player = item.getWorld().getPlayerByUuid(itemEntityAccessor.getThrower());
         if (player == null || hasOwner() || isBaby() || !player.hasStatusEffect(StatusEffects.HERO_OF_THE_VILLAGE)) {
             ci.cancel();
             return;
         }
 
-        this.setOwnerUuid(item.getThrower());
+        this.setOwnerUuid(itemEntityAccessor.getThrower());
         this.setStanding(false);
         this.setFollowingOwner(true);
-        this.world.sendEntityStatus((VillagerEntity)(Object)this, EntityStatuses.ADD_VILLAGER_HEART_PARTICLES);
+        this.getWorld().sendEntityStatus((VillagerEntity)(Object)this, EntityStatuses.ADD_VILLAGER_HEART_PARTICLES);
     }
 
     @Inject(
@@ -121,7 +125,7 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
                 return new TamedVillagerScreenHandler(syncId, inv, (VillagerEntity) (Object) VillagerEntityMixin.this);
             }
         });
-        cir.setReturnValue(ActionResult.success(this.world.isClient));
+        cir.setReturnValue(ActionResult.success(this.getWorld().isClient));
     }
 
     @Inject(
@@ -210,7 +214,7 @@ public abstract class VillagerEntityMixin extends MobEntity implements IVillager
             if (UUID == null) {
                 return null;
             }
-            return this.world.getPlayerByUuid(UUID);
+            return this.getWorld().getPlayerByUuid(UUID);
         } catch (IllegalArgumentException illegalArgumentException) {
             return null;
         }

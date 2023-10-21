@@ -25,7 +25,7 @@ public class VillagerFollowOwnerGoal extends AbstractVillagerGoal {
 
     public VillagerFollowOwnerGoal(VillagerEntity villager, double speed, float minDistance, float maxDistance, boolean leavesAllowed) {
         super(villager);
-        this.world = this.villager.world;
+        this.world = this.villager.getWorld();
         this.speed = speed;
         this.minDistance = minDistance;
         this.maxDistance = maxDistance;

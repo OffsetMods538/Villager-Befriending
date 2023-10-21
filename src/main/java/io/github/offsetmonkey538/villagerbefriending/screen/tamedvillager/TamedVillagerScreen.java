@@ -1,15 +1,13 @@
 package io.github.offsetmonkey538.villagerbefriending.screen.tamedvillager;
 
-import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-import static io.github.offsetmonkey538.villagerbefriending.entrypoint.VillagerBefriendingMain.MOD_ID;
+import static io.github.offsetmonkey538.villagerbefriending.entrypoint.VillagerBefriendingMain.*;
 import static io.github.offsetmonkey538.villagerbefriending.screen.tamedvillager.Buttons.*;
 
 public class TamedVillagerScreen extends HandledScreen<TamedVillagerScreenHandler> {
@@ -22,18 +20,15 @@ public class TamedVillagerScreen extends HandledScreen<TamedVillagerScreenHandle
     }
 
     @Override
-    protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, TEXTURE_PATH);
+    protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
         int x = (width - backgroundWidth) / 2;
         int y = (height - backgroundHeight) / 2;
-        drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
+        context.drawTexture(TEXTURE_PATH, x, y, 0, 0, backgroundWidth, backgroundHeight);
     }
 
     @Override
-    protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY) {
-        this.textRenderer.draw(matrices, this.title, (float)this.titleX, (float)this.titleY, 0x404040);
+    protected void drawForeground(DrawContext context, int mouseX, int mouseY) {
+        context.drawText(this.textRenderer, this.title, this.titleX, this.titleY, 4210752, false);
     }
 
     @Override
@@ -46,19 +41,43 @@ public class TamedVillagerScreen extends HandledScreen<TamedVillagerScreenHandle
         int buttonHeight = 20;
 
         // Stay here
-        addDrawableChild(new ButtonWidget(x + 6, middleY - buttonHeight / 2, buttonWidth, buttonHeight, Text.translatable(String.format("entity.%s.villager.command_menu.button.stay", MOD_ID)), button ->
-            sendButtonPressedPacket(STAND)
-        ));
+        addDrawableChild(ButtonWidget
+                .builder(
+                        Text.translatable("entity.villagerbefriending.villager.command_menu.button.stay"), button -> sendButtonPressedPacket(STAND)
+                )
+                .dimensions(
+                        x + 6,
+                        middleY - buttonHeight / 2,
+                        buttonWidth, buttonHeight
+                )
+                .build()
+        );
 
         // Follow me
-        addDrawableChild(new ButtonWidget(x + (backgroundWidth / 2) - buttonWidth / 2, middleY - buttonHeight / 2, buttonWidth, buttonHeight, Text.translatable(String.format("entity.%s.villager.command_menu.button.follow", MOD_ID)), button ->
-            sendButtonPressedPacket(FOLLOW)
-        ));
+        addDrawableChild(ButtonWidget
+                .builder(
+                        Text.translatable("entity.villagerbefriending.villager.command_menu.button.follow"), button -> sendButtonPressedPacket(FOLLOW)
+                )
+                .dimensions(
+                        x + backgroundWidth / 2 - buttonWidth / 2,
+                        middleY - buttonHeight / 2,
+                        buttonWidth, buttonHeight
+                )
+                .build()
+        );
 
         // Wander around
-        addDrawableChild(new ButtonWidget((x + (backgroundWidth) - 6) - buttonWidth, middleY - buttonHeight / 2, buttonWidth, buttonHeight, Text.translatable(String.format("entity.%s.villager.command_menu.button.wander", MOD_ID)), button ->
-            sendButtonPressedPacket(WANDER)
-        ));
+        addDrawableChild(ButtonWidget
+                .builder(
+                        Text.translatable("entity.villagerbefriending.villager.command_menu.button.wander"), button -> sendButtonPressedPacket(WANDER)
+                )
+                .dimensions(
+                        x + backgroundWidth - 6 - buttonWidth,
+                        middleY - buttonHeight / 2,
+                        buttonWidth, buttonHeight
+                )
+                .build()
+        );
     }
 
     private void sendButtonPressedPacket(int buttonId) {

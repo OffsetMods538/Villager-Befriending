@@ -1,13 +1,14 @@
 {
-  "required": true,
-  "minVersion": "0.8",
-  "package": "io.github.offsetmonkey538.villagerbefriending.mixin",
-  "compatibilityLevel": "JAVA_8",
-  "mixins": [
-    "LivingEntityMixin",
-    "VillagerEntityMixin"
-  ],
-  "injectors": {
-    "defaultRequire": 1
+    "required": true,
+    "minVersion": "0.8",
+    "package": "io.github.offsetmonkey538.villagerbefriending.mixin",
+    "compatibilityLevel": "JAVA_8",
+    "mixins": [
+        "LivingEntityMixin",
+        "VillagerEntityMixin",
+        "accessor.ItemEntityAccessor"
+    ],
+    "injectors": {
+        "defaultRequire": 1
   }
 }
